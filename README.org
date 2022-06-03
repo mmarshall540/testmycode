@@ -30,16 +30,16 @@ This will load the package directly from your local git repo.
 If the =tmc= command isn’t in your system path, you’ll need to tell the package where it is.
 You can do that with Emacs’s Customize system: =M-x customize-variable RET tmc-executable RET=.
 Or if you prefer to set it manually in your init file, just add the following before testmycode.el gets loaded.
-=(customize-set-variable ’tmc-executable "~/.local/opt/testmycode/tmc")=
+=(customize-set-variable 'tmc-executable "~/.local/opt/testmycode/tmc")=
 (where the quoted file-path is the location of the ‘tmc’ executable)
 *** Start the mode automatically whenever opening Java files
 While working through the courses, it makes sense to have the mode enabled in all ‘java-mode‘ buffers’.  To do that, add the following to your init file.
 =(add-hook 'java-mode-hook 'tmc-mode)=
 *** Change the prefix key
-The default prefix key for the commands is =C-c ’=, but you can change this through Emacs’s "Customize" system: =M-x customize-variable RET tmc-prefix-key RET=.
+The default prefix key for the commands is =C-c '= , but you can change this through Emacs’s "Customize" system: =M-x customize-variable RET tmc-prefix-key RET=.
 
 Or if you prefer to set it manually in your init file, just add the following before testmycode.el gets loaded.
-=(customize-set-variable ’tmc-prefix-key (kbd "C-c t"))=
+=(customize-set-variable 'tmc-prefix-key (kbd "C-c t"))=
 (if you wanted to set the prefix key to "C-c t")
 
 You can also change the ‘tmc’ command arguments and the keys used to call them.  The way to do this is to customize the =tmc-arg-key-alist= variable.
