@@ -55,35 +55,45 @@ See https://github.com/testmycode/tmc-cli"
   :type '(key-sequence)
   :group 'testmycode)
 
+(defcustom tmc-arg-key-alist '(("login"             . [?l])
+                               ("courses"           . [?c])
+                               ("test"              . [?t])
+                               ("submit"            . [?s])
+                               ("update"            . [?u])
+                               ("exercises -n"      . [?e])   ;; optional -n or --no-pager arg
+                               ("paste"             . [?y])
+                               ("organization"      . [?o])
+                               ("download -a"       . [?a])   ;; -a to download all courses
+                               ("config -l"         . [?g])) ;; -l to list all settings
+  "Alist of arguments to the `tmc' command and the keys to call them."
+  :type '(alist :key-type string :value-type key-sequence)
+  :group 'testmycode)
+
 (define-prefix-command 'tmc-prefix)
+
 (defvar tmc-mode-map (make-sparse-keymap))
+
 (define-key tmc-mode-map [menu-bar tmc]
             (cons "TMC" (make-sparse-keymap "TMC")))
 
-;; TODO Reorganize the command definitions to provide more
-;; fine-grained control.  e.g. It'd be nice if we could move to the
-;; top of the buffer after listing the exercises.
-(dolist (pair '(("login"             . [?l])
-                ("courses"           . [?c])
-                ("test"              . [?t])
-                ("submit"            . [?s])
-                ("update"            . [?u])
-                ("exercises -n"      . [?e])   ;; optional -n or --no-pager arg
-                ("paste"             . [?y])
-                ("organization"      . [?o])
-                ("download -a"       . [?a])   ;; -a to download all courses
-                ("config -l"         . [?g]))) ;; -l to list all settings
+(defun tmc--define-key-menu (key cmd menu-string)
+  "Set up key binding and menu-entry for testmycode.
+Use KEY, CMD, and MENU-STRING for same."
+  (define-key 'tmc-prefix key cmd)
+  (define-key tmc-mode-map (vector 'menu-bar 'tmc `,cmd) `(,menu-string . ,cmd)))
+
+(tmc--define-key-menu [?n] 'tmc-next-exercise "Next Exercise")
+(tmc--define-key-menu [?p] 'tmc-previous-exercise "Previous Exercise")
+(tmc--define-key-menu [?r] 'tmc-run-run "Run this file")
+
+(dolist (pair tmc-arg-key-alist)
   (let ((s (intern (concat "tmc-run-" (car (split-string (car pair))))))
         (k (cdr pair)))
     (fset s
           (lambda ()
             (interactive)
             (tmc-run (car pair))))
-    (define-key 'tmc-prefix k s)
-    (define-key tmc-mode-map (vector 'menu-bar 'tmc s) `(,(car pair) . ,s))))
-
-(define-key 'tmc-prefix [?n] 'tmc-next-exercise)
-(define-key 'tmc-prefix [?p] 'tmc-previous-exercise)
+    (tmc--define-key-menu k s (car pair))))
 
 (defun tmc-run (cmd)
   "Run `tmc' in *terminal* buffer with the given CMD.
@@ -104,8 +114,6 @@ Optionally, add ARGS."
         (set (make-local-variable 'compile-command)
              (format "javac %s" source))
         (command-execute 'compile)))))
-
-(define-key 'tmc-prefix [?r] 'tmc-run-run)
 
 (defun tmc-next-exercise (&optional currdir previous)
   "Find next exercise file from.
