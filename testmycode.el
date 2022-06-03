@@ -1,4 +1,4 @@
-;;; testmycode.el --- For use with mooc.fi courses.  -*- lexical-binding: t; -*-
+;;; testmycode --- Interface to the tmc-cli command for use with mooc.fi courses.  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Martin Marshall
 
@@ -39,7 +39,7 @@
 ;; ;; | " tmc-executable " submit\"")))))
 
 (defgroup testmycode nil
-  "Settings for testmycode.el, which is an interface to the TestMyCode cli program.
+  "Settings for testmycode, which is an interface to the TestMyCode cli program.
 See https://github.com/testmycode/tmc-cli"
   :group 'term)
 
