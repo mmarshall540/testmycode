@@ -156,6 +156,7 @@ This means we can't automatically find the next or previous exercise file.")))))
   (interactive)
   (tmc-next-exercise file t))
 
+;;;###autoload
 (define-minor-mode tmc-mode
   "Set up commands for running the TestMyCode cli program."
   :lighter " TMC"
