@@ -73,6 +73,8 @@ See https://github.com/testmycode/tmc-cli"
 
 (defvar tmc-mode-map (make-sparse-keymap))
 
+(define-key tmc-mode-map tmc-prefix-key 'tmc-prefix)
+
 (define-key tmc-mode-map [menu-bar tmc]
             (cons "TMC" (make-sparse-keymap "TMC")))
 
@@ -169,12 +171,7 @@ This means we can't automatically find the next or previous exercise file.")))))
   "Set up commands for running the TestMyCode cli program."
   :lighter " TMC"
   :keymap tmc-mode-map
-  :global t
-  :group 'testmycode
-  :after-hook
-  (if tmc-mode
-      (define-key global-map tmc-prefix-key 'tmc-prefix)
-    (define-key global-map tmc-prefix-key nil)))
+  :group 'testmycode)
 
 (provide 'testmycode)
 ;;; testmycode.el ends here
