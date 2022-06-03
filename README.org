@@ -9,23 +9,31 @@ Fortunately, you can use any editor you like, because the TestMyCode project pro
 So if you wanted to use Emacs (or Vim, or Nano, etc.), you could use that for the exercises and then go to your shell to type =tmc test=, =tmc submit=, etc.
 
 But I like to stay in Emacs, so I made this package to interface with the command-line program and jump between exercise files.
+** Prerequisite
+For this to be of any use, you must have the [[https://github.com/testmycode/tmc-cli][tmc-cli command]] installed on your system.  If it’s in one of the directories listed in Emacs’s =exec-path= variable, it will be found automatically.  Otherwise, you can provide the full path as described in the Configuration section below.
+
+If you’re on Linux, I recommend just downloading the executable from [[https://github.com/testmycode/tmc-cli/releases/latest][this page]] and dropping it in either "~\slash{}.local\slash{}bin\slash{}" or "\slash{}usr\slash{}local\slash{}bin\slash{}".
 ** Installation
-*** First, clone the repository to your machine.
+*** First, clone this repository to your machine.
 =git clone git@github.com:mmarshall540/testmycode.git=
 *** Now you can proceed in one of two ways:
-**** Option 1 (package.el)
+**** Option 1 (package.el, recommended)
 Open up Emacs and do the following:
 =M-x package-install-file RET [PATH-TO-THE-TESTMYCODE-DIRECTORY] RET=
-This will install the package from the local git repo into the local Emacs package store.  Package.el will make it available and set up autoloading.
+This will install the package from your local git repo into the Emacs package store.  Package.el will make it available and set up autoloading.
 **** Option 2 (manual)
 If you don’t use package.el, or prefer to keep this package separate from it, you can add the following to your Emacs ‘init’ file.
 =(load [PATH-TO-THE-TESTMYCODE-DIRECTORY]/testmycode.el)=
-This will load the file directly from the local git repo, but won’t set up autoloading.
-For that, you will need to also add the following line.
-=(autoload 'tmc-mode (expand-file-name "testmycode.el" [PATH-TO-THE-TESTMYCODE-DIRECTORY]) "" t)=
+This will load the package directly from your local git repo.
 ** Configuration
+*** Location of the "tmc" command on your system
+If the =tmc= command isn’t in your system path, you’ll need to tell the package where it is.
+You can do that with Emacs’s Customize system: =M-x customize-variable RET tmc-executable RET=.
+Or if you prefer to set it manually in your init file, just add the following before testmycode.el gets loaded.
+=(customize-set-variable ’tmc-executable "~/.local/opt/testmycode/tmc")=
+(where the quoted file-path is the location of the ‘tmc’ executable)
 *** Start the mode automatically whenever opening Java files
-While working through the courses, it makes sense to enable the mode whenever ‘java-mode’ starts.  To do that, add the following to your init file.
+While working through the courses, it makes sense to have the mode enabled in all ‘java-mode‘ buffers’.  To do that, add the following to your init file.
 =(add-hook 'java-mode-hook 'tmc-mode)=
 *** Change the prefix key
 The default prefix key for the commands is =C-c ’=, but you can change this through Emacs’s "Customize" system: =M-x customize-variable RET tmc-prefix-key RET=.
@@ -33,3 +41,14 @@ The default prefix key for the commands is =C-c ’=, but you can change this th
 Or if you prefer to set it manually in your init file, just add the following before testmycode.el gets loaded.
 =(customize-set-variable ’tmc-prefix-key (kbd "C-c t"))=
 (if you wanted to set the prefix key to "C-c t")
+
+You can also change the ‘tmc’ command arguments and the keys used to call them.  The way to do this is to customize the =tmc-arg-key-alist= variable.
+** See also
+*** [[https://github.com/testmycode/tmc-intellij][tmc-intellij]]
+A TestMyCode plugin for the IntelliJ IDEA program.
+*** [[https://github.com/testmycode/tmc-netbeans][tmc-netbeans]]
+The original TestMyCode plugin for the NetBeans IDE.
+*** [[https://github.com/rage/tmc-cli-rust][tmc-cli-rust]]
+A newer version of ‘tmc-cli’ written in Rust.  Haven’t tested it with this package.  I had easier success installing the older version.
+*** [[https://github.com/testmycode/tmc-cli][tmc-cli]]
+The command on which this package depends.
