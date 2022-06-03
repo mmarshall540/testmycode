@@ -86,7 +86,7 @@ Use KEY, CMD, and MENU-STRING for same."
 
 (tmc--define-key-menu [?n] 'tmc-next-exercise "Next Exercise")
 (tmc--define-key-menu [?p] 'tmc-previous-exercise "Previous Exercise")
-(tmc--define-key-menu [?r] 'tmc-run-run "Run this file")
+(tmc--define-key-menu [?r] 'tmc-run-run "Run This File")
 
 (dolist (pair tmc-arg-key-alist)
   (let ((s (intern (concat "tmc-run-" (car (split-string (car pair))))))
