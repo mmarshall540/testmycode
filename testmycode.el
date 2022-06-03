@@ -1,10 +1,11 @@
-;;; testmycode --- Interface to the tmc-cli command for use with mooc.fi courses.  -*- lexical-binding: t; -*-
+;;; testmycode.el --- Interface to the tmc-cli command for use with mooc.fi courses.  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022  Martin Marshall
 
 ;; Author: Martin Marshall <law@martinmarshall.com>
-;; Keywords: convenience, tools
+;; URL: https://github.com/mmarshall540/testmycode
 ;; Version: 0.1
+;; Keywords: convenience, tools
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
