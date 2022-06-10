@@ -89,6 +89,8 @@ Use KEY, CMD, and MENU-STRING for same."
 (tmc--define-key-menu [?r] 'tmc-run-run "Run This File")
 
 (dolist (pair tmc-arg-key-alist)
+  ;; Get only the first word in the (car pair) string, and concat it
+  ;; to "tmc-run-" to generate command names.
   (let ((s (intern (concat "tmc-run-" (car (split-string (car pair))))))
         (k (cdr pair)))
     (fset s
@@ -102,6 +104,10 @@ Use KEY, CMD, and MENU-STRING for same."
 Optionally, add ARGS."
   (term (concat "/bin/bash -c \"" tmc-executable " " cmd "\"")))
 
+;; TODO Fix problem with *terminal* buffer.  When running the next
+;; exercise with an existing *terminal* buffer, we want to reuse the
+;; same buffer, but `default-directory' doesn't get updated in that
+;; buffer, so it can cause an error.
 (defun tmc-run-run ()
   "Run the java program for the current exercise."
   (interactive)
@@ -171,6 +177,10 @@ This means we can't automatically find the next or previous exercise file.")))))
   "Set up commands for running the TestMyCode cli program."
   :lighter " TMC"
   :keymap tmc-mode-map
+  :group 'testmycode)
+
+;;;###autoload
+(define-globalized-minor-mode tmc-global-mode tmc-mode (lambda () (tmc-mode 1))
   :group 'testmycode)
 
 (provide 'testmycode)

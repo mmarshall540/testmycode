@@ -34,7 +34,7 @@ If you’re on Linux, I recommend just downloading the executable from [this pag
 
 ### First, clone this repository to your machine.
 
-    git clone git@github.com:mmarshall540/testmycode.git
+    git clone https://github.com/mmarshall540/testmycode.git
 
 
 <a id="org20d6584"></a>
