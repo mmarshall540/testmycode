@@ -1,5 +1,6 @@
 # Testmycode (for Emacs)
 
+*CAVEAT*: This package has only been tested on a recent build of the [Emacs master branch (v29.0.50)](https://git.savannah.gnu.org/cgit/emacs.git).  It may or may not function properly on earlier versions.
 
 <a id="org3fa7dda"></a>
 
