@@ -69,6 +69,11 @@ See https://github.com/testmycode/tmc-cli"
   :type '(alist :key-type string :value-type key-sequence)
   :group 'testmycode)
 
+(defcustom tmc-skip-feedback nil
+  "Whether to skip the feedback prompt when submitting."
+  :type 'boolean
+  :group 'testmycode)
+
 (define-prefix-command 'tmc-prefix)
 
 (defvar tmc-mode-map (make-sparse-keymap))
@@ -100,9 +105,12 @@ Use KEY, CMD, and MENU-STRING for same."
     (tmc--define-key-menu k s (car pair))))
 
 (defun tmc-run (cmd)
-  "Run `tmc' in *terminal* buffer with the given CMD.
-Optionally, add ARGS."
-  (term (concat "/bin/bash -c \"" tmc-executable " " cmd "\"")))
+  "Run `tmc' in *terminal* buffer with the given CMD."
+  (let ((tmc-executable (if (and (string= cmd "submit")
+                                 tmc-skip-feedback)
+                            (concat "yes n | " tmc-executable)
+                          tmc-executable)))
+    (term (concat "/bin/bash -c \"" tmc-executable " " cmd "\""))))
 
 ;; TODO Fix problem with *terminal* buffer.  When running the next
 ;; exercise with an existing *terminal* buffer, we want to reuse the
